@@ -82,8 +82,31 @@ else:
 finally:
     conn.close()
 
+'''запрос на заполнение таблицы'''
 
+SQL_QUERY = '''
+INSERT INTO product (product_id, product_name, price)
+VALUES 
+(1,'Desctop Computer', 800),
+(2,'Leptop',1200),
+(3,'Tablet', 200),
+(4, 'Monitor', 350),
+(5, 'Printer', 150)
+'''
 
+'''новое подключение к бд'''
+conn = pyodbc.connect(connectionString)
+conn.autocommit = True
+cursor = conn.cursor()
+try:
+    cursor.execute('USE Products')  # запрос на смену БД
+    cursor.execute(SQL_QUERY)
+except pyodbc.ProgrammingError as ex:
+    print(ex)
+else:
+    print("Table Filled In")
+finally:
+    conn.close()
 
 
 # SQL_QUERY = '''
