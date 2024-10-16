@@ -22,13 +22,27 @@ connectionString = f'''DRIVER={{ODBC Driver 17 for SQL Server}};
                                  UID={USER};
                                  PWD={PASSWORD}'''
 
-SQL_QUERY = ''' 
-SELECT fio
-FROM Students
-'''
+# SQL_QUERY = '''
+# SELECT fio
+# FROM Students
+# '''
+
+
+# conn = pyodbc.connect(connectionString)
+# cursor = conn.cursor()
+# cursor.execute(SQL_QUERY)
+# records = cursor.fetchall()
+# for record in records:
+#     print(f'{record.fio}')
+
+SQL_QUERY = '''
+CREATE TABLE dbo.TestTable
+(id int PRIMARY KEY, 
+ TestColumn1 nvarchar(50),
+ TestColumn2 nvarchar(100));'''
+
+
 conn = pyodbc.connect(connectionString)
 cursor = conn.cursor()
 cursor.execute(SQL_QUERY)
-records = cursor.fetchall()
-for record in records:
-    print(f'{record.fio}')
+cursor.commit()
