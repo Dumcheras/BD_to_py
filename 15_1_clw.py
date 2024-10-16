@@ -101,7 +101,7 @@ cursor = conn.cursor()
 try:
     cursor.execute('USE Products')  # запрос на смену БД
     cursor.execute(SQL_QUERY)
-except pyodbc.ProgrammingError as ex:
+except pyodbc.Error as ex:
     print(ex)
 else:
     print("Table Filled In")
@@ -109,18 +109,19 @@ finally:
     conn.close()
 
 
-# SQL_QUERY = '''
-# SELECT fio
-# FROM Students
-# '''
+SQL_QUERY = r'''
+SELECT product_name,price
+FROM Product
+'''
 
 
-# conn = pyodbc.connect(connectionString)
-# cursor = conn.cursor()
-# cursor.execute(SQL_QUERY)
-# records = cursor.fetchall()
-# for record in records:
-#     print(f'{record.fio}')
+conn = pyodbc.connect(connectionString)
+cursor = conn.cursor()
+cursor.execute('USE Products')  # запрос на смену БД
+cursor.execute(SQL_QUERY)
+records = cursor.fetchall()
+for record in records:
+    print(f'{record.product_name} // {record.price}')
 
 # SQL_QUERY = '''
 # CREATE TABLE dbo.TestTable
