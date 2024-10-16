@@ -8,11 +8,19 @@ DATABASE = os.getenv('MS_SQL_DATABASE')
 USER = os.getenv('MS_SQL_USER')
 PASSWORD = os.getenv('MS_SQL_KEY')
 
+# """SimpleConnection"""
+# connectionString = f'''DRIVER={{SQL SERVER}};
+#                                  SERVER={SERVER};
+#                                  DATABASE={DATABASE};
+#                                  Trusted_Connection=yes'''
+
+
 """SimpleConnection"""
-connectionString = f'''DRIVER={{SQL SERVER}};
-                                 SERVER={SERVER}; 
+connectionString = f'''DRIVER={{ODBC Driver 17 for SQL Server}};
+                                 SERVER={SERVER};
                                  DATABASE={DATABASE};
-                                 Trusted_Connection=yes'''
+                                 UID={USER};
+                                 PWD={PASSWORD}'''
 
 SQL_QUERY = ''' 
 SELECT fio
