@@ -120,8 +120,14 @@ cursor = conn.cursor()
 cursor.execute('USE Products')  # запрос на смену БД
 cursor.execute(SQL_QUERY)
 records = cursor.fetchall()
+data_list = []
 for record in records:
-    print(f'{record.product_name} // {record.price}')
+    # print(f'{record.product_name} // {record.price}')
+    data_dict = {'product_name':record.product_name, 'price':record.price}
+    data_list.append(data_dict)
+for data in data_list:
+    print(data)
+
 
 # SQL_QUERY = '''
 # CREATE TABLE dbo.TestTable
