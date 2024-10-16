@@ -22,7 +22,8 @@ connectionString = f'''DRIVER={{ODBC Driver 17 for SQL Server}};
                                  UID={USER};
                                  PWD={PASSWORD}'''
 
-'''Create DB Params'''  # Запрос на создание БД
+'''запрос на создание БД'''
+'''Create DB Params'''
 SQL_COMMAND = r'''
 CREATE DATABASE Products
 ON
@@ -42,6 +43,7 @@ MAXSIZE = 200MB,
 FILEGROWTH = 5%
 )'''
 
+'''новое подключение к бд'''
 conn = pyodbc.connect(connectionString)
 conn.autocommit = True
 cursor = conn.cursor()
@@ -54,6 +56,31 @@ else:
 finally:
     conn.close()
 
+
+
+'''запрос на создание таблицы'''
+
+SQL_QUERY = '''
+CREATE TABLE Product
+(
+product_id  int PRIMARY KEY,
+product_name nvarchar(50),
+price int
+)'''
+
+'''новое подключение к бд'''
+conn = pyodbc.connect(connectionString)
+conn.autocommit = True
+cursor = conn.cursor()
+try:
+    cursor.execute('USE Products') #запрос на смену БД
+    cursor.execute(SQL_QUERY)
+except pyodbc.ProgrammingError as ex:
+    print(ex)
+else:
+    print("Table Created")
+finally:
+    conn.close()
 
 
 
