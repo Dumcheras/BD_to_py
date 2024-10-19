@@ -25,3 +25,21 @@ FILEGROWTH = {filegrowth}
     return COMMAND
 
 
+def create_employers(table_name):  # запрос для создания таблицы
+    QUERY = fr'''CREATE TABLE {table_name}
+            (employer_id int PRIMARY KEY,
+            employer_name nvarchar(100),
+            employer_url nvarchar(200));'''
+    return QUERY
+
+
+def create_vacansies(table_name):  # запрос для создания таблицы
+    QUERY = fr'''CREATE TABLE {table_name}
+            (vacansies_id int PRIMARY KEY,
+            vacansies_name nvarchar(100),
+            vacansies_url nvarchar(200),
+            vacansies_salary_form int,
+            vacansies_salary_to int,
+            employer_id int
+            REFERENCES employers(employer_id));'''
+    return QUERY
