@@ -46,6 +46,17 @@ class MSSQLOperator:
         else:
             return f'Таблица {table_name} успешно создана!'
 
+    def drop_table(self, database_name, table_name, sql_query):
+        cursor = self.conn.cursor()
+        cursor.execute(f'USE {database_name}')
+        SQL_Query = sql_query(table_name)
+        try:
+            cursor.execute(SQL_Query)
+        except pyodbc.Error as ex:
+            return ex
+        else:
+            return f'Таблица {table_name} успешно удалена!'
+
 
 if __name__ == '__main__':
     load_dotenv()
@@ -58,6 +69,9 @@ if __name__ == '__main__':
     my_conn = ConnectDB.connect_to_db(SERVER, DATABASE, USER, PASSWORD)
     my_db_operator = MSSQLOperator(my_conn)
     print(my_db_operator.create_database(new_db, '10', '20', '5%'))  # создаем бд
+
+    print(my_db_operator.drop_table(new_db, "Vacancies", SQL_Queries.drop_table))  # вызов метода для удаления таблицы
+    print(my_db_operator.drop_table(new_db, "Employers", SQL_Queries.drop_table))  # вызов метода для удаления таблицы
 
     print(my_db_operator.create_table(new_db, "Employers", SQL_Queries.create_employers))  # создаем таблицу
     print(my_db_operator.create_table(new_db, "Vacancies", SQL_Queries.create_vacansies))  # создаем таблицу
