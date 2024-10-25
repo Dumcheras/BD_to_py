@@ -43,3 +43,7 @@ def create_vacansies(table_name):  # запрос для создания таб
             employer_id int
             REFERENCES employers(employer_id));'''
     return QUERY
+
+def drop_table(table_name):
+    QUERY = fr'''DROP TABLE {table_name}'''
+    return QUERY
